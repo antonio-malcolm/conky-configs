@@ -323,53 +323,56 @@ local function drawToConkyWindow(cairoContext)
 
   -- draw swap
 
-  local swapCurveDescriptor = getCurveDescriptor('memory')
-  swapCurveDescriptor['radius'] = 44
-  swapCurveDescriptor['weight'] = 14
-  swapCurveDescriptor['color'] = getColorHexidecmial(8)
-  swapCurveDescriptor['background_alpha'] = backgroundAlphaLowerBound
+  local nextCurveDescriptor = getCurveDescriptor('memory')
+  nextCurveDescriptor['radius'] = 44
+  nextCurveDescriptor['weight'] = 14
+  nextCurveDescriptor['color'] = getColorHexidecmial(8)
+  nextCurveDescriptor['background_alpha'] = backgroundAlphaLowerBound
 
   drawPercentageCurveFromConkyValue(getCurveDescriptor('memory'), '$memperc')
-  drawPercentageCurveFromConkyValue(swapCurveDescriptor, '$swapperc')
+  drawPercentageCurveFromConkyValue(nextCurveDescriptor, '$swapperc')
 
 
   -- draw volumes
 
-  local volumeHomeCurveDescriptor = getCurveDescriptor('volume_use')
-  volumeHomeCurveDescriptor['radius'] = 44
-  volumeHomeCurveDescriptor['color'] = getColorHexidecmial(4)
-  volumeHomeCurveDescriptor['background_alpha'] = getBackgroundAlphaSteps(4)[3]
+  nextCurveDescriptor = getCurveDescriptor('volume_use')
+  nextCurveDescriptor['radius'] = 44
+  nextCurveDescriptor['color'] = getColorHexidecmial(4)
+  nextCurveDescriptor['background_alpha'] = getBackgroundAlphaSteps(4)[3]
 
   drawPercentageCurveFromConkyValue(getCurveDescriptor('volume_use'), '${fs_used_perc /}')
-  drawPercentageCurveFromConkyValue(volumeHomeCurveDescriptor, '${fs_used_perc /home}')
+  drawPercentageCurveFromConkyValue(nextCurveDescriptor, '${fs_used_perc /home}')
   
+  
+  -- draw battery
+
   drawPercentageCurveFromConkyValue(getCurveDescriptor('battery'), '${battery_percent BAT0}')
 
 
   -- draw wired network
 
-  local networkWiredUpCurveDescriptor = getCurveDescriptor('network_wired')
-  networkWiredUpCurveDescriptor['percentage_divisor'] = 100
-  networkWiredUpCurveDescriptor['radius'] = 44
-  networkWiredUpCurveDescriptor['weight'] = 14
-  networkWiredUpCurveDescriptor['color'] = getColorHexidecmial(4)
-  networkWiredUpCurveDescriptor['background_alpha'] = getBackgroundAlphaSteps(4)[3]
+  nextCurveDescriptor = getCurveDescriptor('network_wired')
+  nextCurveDescriptor['percentage_divisor'] = 100
+  nextCurveDescriptor['radius'] = 44
+  nextCurveDescriptor['weight'] = 14
+  nextCurveDescriptor['color'] = getColorHexidecmial(4)
+  nextCurveDescriptor['background_alpha'] = getBackgroundAlphaSteps(4)[3]
 
   drawPercentageCurveFromConkyValue(getCurveDescriptor('network_wired'), '${downspeedf enp0s25}')
-  drawPercentageCurveFromConkyValue(networkWiredUpCurveDescriptor, '${upspeedf enp0s25}')
+  drawPercentageCurveFromConkyValue(nextCurveDescriptor, '${upspeedf enp0s25}')
 
 
   -- draw wireless network
 
-  local networkWiredUpCurveDescriptor = getCurveDescriptor('network_wireless')
-  networkWiredUpCurveDescriptor['percentage_divisor'] = 100
-  networkWiredUpCurveDescriptor['radius'] = 44
-  networkWiredUpCurveDescriptor['weight'] = 14
-  networkWiredUpCurveDescriptor['color'] = getColorHexidecmial(4)
-  networkWiredUpCurveDescriptor['background_alpha'] = getBackgroundAlphaSteps(4)[3]
+  nextCurveDescriptor = getCurveDescriptor('network_wireless')
+  nextCurveDescriptor['percentage_divisor'] = 100
+  nextCurveDescriptor['radius'] = 44
+  nextCurveDescriptor['weight'] = 14
+  nextCurveDescriptor['color'] = getColorHexidecmial(4)
+  nextCurveDescriptor['background_alpha'] = getBackgroundAlphaSteps(4)[3]
 
   drawPercentageCurveFromConkyValue(getCurveDescriptor('network_wireless'), '${downspeedf wlp3s0}')
-  drawPercentageCurveFromConkyValue(networkWiredUpCurveDescriptor, '${upspeedf wlp3s0}')
+  drawPercentageCurveFromConkyValue(nextCurveDescriptor, '${upspeedf wlp3s0}')
 
 end
 
