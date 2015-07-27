@@ -1,0 +1,162 @@
+-- Copyright 2015 Antonio Malcolm
+   
+-- This file, and all contents herein, is subject to the terms of the Mozilla Public License, v. 2.0. 
+-- If a copy of the MPL was not distributed with this file, 
+-- you can obtain one at http://mozilla.org/MPL/2.0/.
+
+-- system-informatics-colors 
+
+-- v2015.07.26
+
+-- Authored by Antonio Malcolm
+
+
+conky.config = { 
+
+  -- Behavior
+
+  background = true,
+  update_interval = 1,
+  total_run_times = 0,
+
+
+  -- Performance
+
+  double_buffer = true,
+  no_buffers = true,
+
+
+  -- Window
+
+  own_window = true,
+  own_window_class = 'Conky',
+  own_window_type = 'override',
+  own_window_transparent = true,
+
+  -- THIS is ignored if own_window_type is set to 'override'...
+  own_window_hints = 'undecorated,below,sticky,skip_taskbar,skip_pager',
+
+
+  -- Positioning (based on 1920x1080 display res)
+
+  alignment = 'top_right',
+  gap_x = 1370,
+  gap_y = 10,
+
+
+  -- Size
+
+  minimum_width = 522,
+  maximum_width = 522,  
+  minimum_height = 900,
+
+
+  -- Font
+
+  use_xft = true,
+  xftalpha = 1,
+  font = 'Ruda:size=12',
+  override_utf8_locale = true,
+  uppercase = false,
+
+
+  -- Colors
+
+  default_color = 'fffeff',
+  default_shade_color = '000000',
+  default_outline_color = '666666',
+  color0 = 'fffeff',
+  color1 = 'f8F2eb',
+  color2 = '091219',
+
+
+  -- Decorations
+
+  draw_shades = false,
+  draw_outline = false,
+  draw_borders = false,
+  draw_graph_borders = true,
+
+
+  -- Variable
+
+  top_name_width = 8,
+
+
+  -- Lua
+
+  lua_load = '~/.config/conky/scripts/conky-curves-system-informatics-colors.lua',
+  lua_draw_hook_pre = 'conky_main'
+
+}
+
+
+-- Output
+
+conky.text = [[
+${font Ruda:bold:size=62}${color2}${time %H}${font Ruda:size=62}${color1}${time %M}${voffset -32}${font Ruda:size=31}${time %S}
+${voffset 16}${font Ruda:bold:size=28}${color2}${time %A} ${voffset -14}${font Ruda:size=14}${color1}${time %d %B %Y}
+
+${image $HOME/.config/conky/images/void-logo-24x20.png -s 24x20 -p 0,156}
+${offset 26}${voffset -8}${font Ruda:bold:size=16}${color2}$nodename
+${voffset -7}${font Ruda:size=12}${color0}Void GNU/Linux, 64-bit
+${font Ruda:size=12}${color0}Kernel v$kernel
+${font Ruda:size=12}${color0}Up for $uptime
+
+${goto 198}${voffset -130}${font Ruda:bold}${color2}1 ${font Ruda}${color0}${exec awk '/cpu MHz/{i++}i==1{printf "%.f",$4; exit}' /proc/cpuinfo}MHz ${alignr 188}(${cpu cpu1}%)
+${goto 198}${voffset 1}${font Ruda:bold}${color2}2 ${font Ruda}${color0}${exec awk '/cpu MHz/{i++}i==2{printf "%.f",$4; exit}' /proc/cpuinfo}MHz ${alignr 188}(${cpu cpu2}%)
+${goto 198}${voffset 1}${font Ruda:bold}${color2}3 ${font Ruda}${color0}${exec awk '/cpu MHz/{i++}i==3{printf "%.f",$4; exit}' /proc/cpuinfo}MHz ${alignr 188}(${cpu cpu3}%)
+${goto 198}${voffset 1}${font Ruda:bold}${color2}4 ${font Ruda}${color0}${exec awk '/cpu MHz/{i++}i==4{printf "%.f",$4; exit}' /proc/cpuinfo}MHz ${alignr 188}(${cpu cpu4}%)
+${goto 198}${voffset 1}${font Ruda:bold}${color2}5 ${font Ruda}${color0}${exec awk '/cpu MHz/{i++}i==5{printf "%.f",$4; exit}' /proc/cpuinfo}MHz ${alignr 188}(${cpu cpu5}%)
+${goto 198}${voffset 1}${font Ruda:bold}${color2}6 ${font Ruda}${color0}${exec awk '/cpu MHz/{i++}i==6{printf "%.f",$4; exit}' /proc/cpuinfo}MHz ${alignr 188}(${cpu cpu6}%)
+${goto 198}${voffset 1}${font Ruda:bold}${color2}7 ${font Ruda}${color0}${exec awk '/cpu MHz/{i++}i==7{printf "%.f",$4; exit}' /proc/cpuinfo}MHz ${alignr 188}(${cpu cpu7}%)
+${goto 198}${voffset 1}${font Ruda:bold}${color2}8 ${font Ruda}${color0}${exec awk '/cpu MHz/{i++}i==8{printf "%.f",$4; exit}' /proc/cpuinfo}MHz ${alignr 188}(${cpu cpu8}%)
+
+${goto 206}${font Ruda:bold:size=16}${color2}CPU
+
+${goto 14}${voffset -120}${font Ruda:bold:size=10}${color2}Top CPU ${goto 94}CPU% ${goto 136}MEM%
+${goto 14}${font Ruda:size=10}${color0}${top name 1} ${goto 90}${top cpu 1} ${goto 132}${top mem 1}
+${goto 14}${top name 2} ${goto 90}${top cpu 2} ${goto 132}${top mem 2}
+${goto 14}${top name 3} ${goto 90}${top cpu 3} ${goto 132}${top mem 3}
+${goto 14}${top name 4} ${goto 90}${top cpu 4} ${goto 132}${top mem 4}
+${goto 14}${top name 5} ${goto 90}${top cpu 5} ${goto 132}${top mem 5}
+${goto 14}${top name 6} ${goto 90}${top cpu 6} ${goto 132}${top mem 6}
+${goto 14}${top name 7} ${goto 90}${top cpu 7} ${goto 132}${top mem 7}
+${goto 14}${top name 8} ${goto 90}${top cpu 8} ${goto 132}${top mem 8}
+${goto 14}${top name 9} ${goto 90}${top cpu 9} ${goto 132}${top mem 9}
+${goto 14}${top name 10} ${goto 90}${top cpu 10} ${goto 132}${top mem 10}
+
+${goto 80}${voffset 20}${font Ruda:bold}${color2}RAM ${offset 8}${font Ruda}${color0}$mem / $memmax
+${goto 80}${font Ruda:bold}${color2}SWAP ${font Ruda}${color0}$swap / $swapmax
+
+${goto 168}${voffset 8}${font Ruda:bold:size=16}${color2}MEMORY
+
+${goto 280}${voffset -104}${font Ruda:bold:size=10}${color2}Top MEM ${goto 360}CPU% ${goto 402}MEM%
+${goto 280}${font Ruda:size=10}${color0}${top_mem name 1} ${goto 356}${top_mem cpu 1} ${goto 398}${top_mem mem 1}
+${goto 280}${top_mem name 2} ${goto 356}${top_mem cpu 2} ${goto 398}${top_mem mem 2}
+${goto 280}${top_mem name 3} ${goto 356}${top_mem cpu 3} ${goto 398}${top_mem mem 3}
+${goto 280}${top_mem name 4} ${goto 356}${top_mem cpu 4} ${goto 398}${top_mem mem 4}
+${goto 280}${top_mem name 5} ${goto 356}${top_mem cpu 5} ${goto 398}${top_mem mem 5}
+
+${goto 172}${voffset -10}${font Ruda}${color0}${battery_short}
+
+${alignr 60}${voffset -26}${font Ruda:bold}${color2}ROOT ${offset 4}${font Ruda}${color0}${fs_used /} ${alignr 77}/ ${fs_size /}
+${alignr 60}${font Ruda:bold}${color2}HOME ${font Ruda}${color0}${fs_used /home} ${alignr 77}/ ${fs_size /home}
+
+${goto 158}${voffset -42}${font Ruda:bold:size=16}${color2}BATTERY
+${goto 364}${voffset 8}${font Ruda:bold:size=16}${color2}VOLUMES
+
+${goto 110}${voffset 1}${font Ruda:bold}${color2}DOWN ${font Ruda}${color0}${downspeedf enp0s25} KiB/s
+${goto 110}${font Ruda:bold}${color2}UP ${offset 26}${font Ruda}${color0}${upspeedf enp0s25} KiB/s
+
+${goto 96}${voffset -4}${font Ruda:bold:size=16}${color2}ETHERNET
+${goto 228}${voffset -40}${font Ruda:bold:size=10}${color2}Address ${goto 330}Total Down ${goto 410}Total Up
+${goto 228}${font Ruda:size=10}${color0}${addr enp0s25} ${goto 330}${totaldown enp0s25} ${goto 410}${totalup enp0s25}
+
+${alignr 118}${voffset 22}${font Ruda:bold}${color2}DOWN ${font Ruda}${color0}${downspeedf wlp3s0} KiB/s
+${alignr 118}${font Ruda:bold}${color2}UP ${font Ruda}${color0}${upspeedf wlp3s0} KiB/s
+
+${goto 314}${voffset -4}${font Ruda:bold:size=16}${color2}WIRELESS
+${goto 46}${voffset -40}${font Ruda:bold:size=10}${color2}Address ${goto 148}Total Down ${goto 230}Total Up
+${goto 46}${font Ruda:size=10}${color0}${addr wlp3s0} ${goto 148}${totaldown wlp3s0} ${goto 230}${totalup wlp3s0}
+]]
