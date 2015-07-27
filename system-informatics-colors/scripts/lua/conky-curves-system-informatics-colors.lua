@@ -1,13 +1,13 @@
 -- Copyright 2015 Antonio Malcolm
-   
+--   
 -- This file, and all contents herein, is subject to the terms of the Mozilla Public License, v. 2.0. 
 -- If a copy of the MPL was not distributed with this file, 
 -- you can obtain one at http://mozilla.org/MPL/2.0/.
-
--- system-informatics-colors 
-
+--
+-- conky-curves-system-informatics-colors.lua - Generates usage curves with percentage arcs, useful in describing the states of various system resources. 
+--
 -- v2015.07.26
-
+--
 -- Authored by Antonio Malcolm
 
 require 'cairo'
