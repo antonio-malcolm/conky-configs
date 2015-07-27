@@ -13,8 +13,7 @@
 require 'cairo'
 
 
--- Responsible for drawing the reporting objects to the Conky window,
--- and provides encapsulation for the logic reponsible for doing so.
+-- Responsible for drawing the reporting objects to the Conky window
 --
 -- cairoContext - Cairo Context object, required, used to draw to the Conky X window
 local function drawToConkyWindow(cairoContext)
