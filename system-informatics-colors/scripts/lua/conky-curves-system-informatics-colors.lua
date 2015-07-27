@@ -321,7 +321,7 @@ local function drawToConkyWindow(cairoContext)
   end
 
 
-  -- draw swap
+  -- draw RAM and swap...
 
   local nextCurveDescriptor = getCurveDescriptor('memory')
   nextCurveDescriptor['radius'] = 44
@@ -333,7 +333,7 @@ local function drawToConkyWindow(cairoContext)
   drawPercentageCurveFromConkyValue(nextCurveDescriptor, '$swapperc')
 
 
-  -- draw volumes
+  -- draw volumes...
 
   nextCurveDescriptor = getCurveDescriptor('volume_use')
   nextCurveDescriptor['radius'] = 44
@@ -344,15 +344,14 @@ local function drawToConkyWindow(cairoContext)
   drawPercentageCurveFromConkyValue(nextCurveDescriptor, '${fs_used_perc /home}')
   
   
-  -- draw battery
+  -- draw battery...
 
   drawPercentageCurveFromConkyValue(getCurveDescriptor('battery'), '${battery_percent BAT0}')
 
 
-  -- draw wired network
+  -- draw wired network...
 
   nextCurveDescriptor = getCurveDescriptor('network_wired')
-  nextCurveDescriptor['percentage_divisor'] = 100
   nextCurveDescriptor['radius'] = 44
   nextCurveDescriptor['weight'] = 14
   nextCurveDescriptor['color'] = getColorHexidecmial(4)
@@ -362,10 +361,9 @@ local function drawToConkyWindow(cairoContext)
   drawPercentageCurveFromConkyValue(nextCurveDescriptor, '${upspeedf enp0s25}')
 
 
-  -- draw wireless network
+  -- draw wireless network...
 
   nextCurveDescriptor = getCurveDescriptor('network_wireless')
-  nextCurveDescriptor['percentage_divisor'] = 100
   nextCurveDescriptor['radius'] = 44
   nextCurveDescriptor['weight'] = 14
   nextCurveDescriptor['color'] = getColorHexidecmial(4)
