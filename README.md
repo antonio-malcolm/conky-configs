@@ -1,6 +1,6 @@
 **Conky configs and Lua scripts, by Antonio Malcolm (v2015.07.26)**
 
-This is a collection of conky configs I've written, and thought to share, for those who might like to use them with their own systems.  
+A collection of conky configs I've written, and thought to share, for anyone who would like to use them.  
 
 These configs *use the most recent Conky, which utilizes Lua syntax in conkyrc*  
 It should be trivial, however, to revert the conkryc files to work with older Conky versions.  

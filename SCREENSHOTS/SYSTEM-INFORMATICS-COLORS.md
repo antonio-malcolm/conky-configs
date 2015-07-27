@@ -1,2 +1,2 @@
-###### system-informatics-colors (vertical, left side, against 1920x1080, uses wallpaper **[abstract-colors-grid-overlay-1920x1080.jpg](../WALLPAPERS/abstract-colors-grid-overlay-1920x1080.jpg)**)
+###### system-informatics-colors (vertical, left side, against 1920x1080, wallpaper: **[abstract-colors-grid-overlay-1920x1080.jpg](../WALLPAPERS/abstract-colors-grid-1920x1080.jpg)**)
 ![system-informatics-colors](img/system-informatics-colors.png?raw=true "system-informatics-colors")
