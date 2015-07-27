@@ -1,10 +1,11 @@
 **Conky configs and Lua scripts, by Antonio Malcolm (v2015.07.26)**
 
 This is a collection of conky configs I've written, and thought to share, for those who might like to use them with their own systems.  
+
 These configs *use the most recent Conky, which utilizes Lua syntax in conkyrc*  
 It should be trivial, however, to revert the conkryc files to work with older Conky versions.  
 Lua scripts require a Conky built with the appropriate Lua bindings for Cairo and imlib2.  
-As of the latest Conky, XDBE must also be built in, if you wish to use double-buffering.  
+As of the latest Conky, if you wish to use double-buffering, XDBE must also be built in.  
 
 Screenshots can be found under **[SCREENSHOTS](SCREENSHOTS)**  
 Wallpapers, as featured in the screenshots, can be found under **[WALLPAPERS](WALLPAPERS)**  
