@@ -24,6 +24,10 @@ local function drawToConkyWindow(cairoContext)
   -- Otherwise, change this to the number of CPUs, cores, or threads for which reporting curves should be drawn.
   local cpuCount = 0
 
+  -- Determines whether or not to use Conky cpu percentages to draw the percentage arcs.
+  -- It is preferable to obtain this directly from the system.
+  local useConkyCpuReporting = false
+
   local colorHexidecimals = {0xe5c81c, 0x1faaf0, 0xef5721, 0x7d1346, 0x28c036, 0xc32546, 0x1e557c, 0xa16ac7}
   local backgroundAlphaLowerBound = 0.35
   local backgroundAlphaUpperBound = 0.65
@@ -69,6 +73,68 @@ local function drawToConkyWindow(cairoContext)
     end
 
     return colorHexidecimals[idx]
+
+  end
+
+  -- Uses '/proc/cpuinfo' to obtain the current CPU speed, in MHz, to be used as a dividend, 
+  -- for obtaining the current CPU usage as a percentage.
+  --
+  -- cpuNumber - string, required, the number used to identify the CPU (or core, or thread, as the case may be)
+  local function getCpuCurrentSpeed(cpuNumber)
+
+    local cpuSpeed = nil
+    local cpuinfoCommand = 'awk \'/cpu MHz/{i++}i=='..cpuNumber..'{printf "%.f",$4; exit}\' /proc/cpuinfo'
+
+    -- Attempt to get the current CPU speed, in MHz, from the system...
+    local cpuinfoResponseOk, cpuinfoResponse = pcall(io.popen, cpuinfoCommand)
+
+    if cpuinfoResponseOk and cpuinfoResponse
+    then
+
+      cpuSpeed = cpuinfoResponse:read('*a')
+      cpuinfoResponse:close()
+
+      if cpuSpeed ~= nil
+      then
+        cpuSpeed = tonumber(cpuSpeed)
+      end
+
+    end
+
+    return cpuSpeed
+
+  end
+
+
+  -- Uses command '# lscpu' to obtain the max CPU speed, in MHz, to be used as a divisor, 
+  -- for obtaining the current CPU usage as a percentage.
+  local function getCpuPercentageDivisor()
+
+    local cpuPercentageDivisor = 100
+
+    -- Attempt to get the max CPU speed, in MHz, from the system...
+    local lscpuResponseOk, lscpuResponse = pcall(io.popen, 'lscpu | awk \'/CPU max MHz/{printf "%.f",$4; exit}\'')
+
+    if lscpuResponseOk and lscpuResponse
+    then
+
+      cpuPercentageDivisor = lscpuResponse:read('*a')
+      lscpuResponse:close()
+
+      if cpuPercentageDivisor == nil
+      then
+
+        -- revert to default (use conky cpu reporting)...
+        useConkyCpuReporting = true
+        cpuPercentageDivisor = 100
+
+      else
+        cpuPercentageDivisor = tonumber(cpuPercentageDivisor)
+      end
+
+    end
+
+    return cpuPercentageDivisor
 
   end
 
@@ -283,6 +349,7 @@ local function drawToConkyWindow(cairoContext)
   if cpuCount > 0
   then
 
+    local cpuPercentageDivisor = getCpuPercentageDivisor()
     local alphaSteps = getBackgroundAlphaSteps(cpuCount)
 
     -- Step backwards through the number of CPUs (or cores, or threads), so the first curve is always outermost...
@@ -302,9 +369,21 @@ local function drawToConkyWindow(cairoContext)
       cpuCurveDescriptor['color'] = getColorHexidecmial(idx)
       cpuCurveDescriptor['background_alpha'] = alphaSteps[idxInverse]
 
-      local conkyArg = string.format('${%s %s%s}', 'cpu', 'cpu', idx)
+      if useConkyCpuReporting
+      then
+        drawPercentageCurveFromConkyValue(cpuCurveDescriptor, string.format('${%s %s%s}', 'cpu', 'cpu', idx))
+      else
 
-      drawPercentageCurveFromConkyValue(cpuCurveDescriptor, conkyArg)
+        local cpuSpeed = getCpuCurrentSpeed(idx)
+
+        if cpuSpeed ~= nil
+        then
+          drawPercentageCurve(cpuCurveDescriptor, (cpuSpeed / cpuPercentageDivisor))
+        else
+          drawPercentageCurveFromConkyValue(cpuCurveDescriptor, string.format('${%s %s%s}', 'cpu', 'cpu', idx))
+        end
+
+      end
 
     end
 
