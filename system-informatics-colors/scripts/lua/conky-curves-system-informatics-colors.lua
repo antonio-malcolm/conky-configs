@@ -6,7 +6,7 @@
 --
 -- conky-curves-system-informatics-colors.lua - Generates usage curves with percentage arcs, useful in describing the states of various system resources. 
 --
--- v2015.07.26
+-- v2015.07.27
 --
 -- Authored by Antonio Malcolm
 
