@@ -6,6 +6,10 @@
 # If a copy of the MPL was not distributed with this file, 
 # you can obtain one at http://mozilla.org/MPL/2.0/.
 #
+# conky-cpus-system-informatics-colors.sh - Obtains the max CPU speed, as well as the current speed for all available CPUs (or cores, or threads, as the case may be), 
+# and generates a percentage for the current usage of each. Unless otherwise directed (by way of a parameter), generates a line of Conky text output for each, 
+# and echoes the result. If directed to return only the generated percentages, a comma-delimited string of percentages is generated and echoed.  
+#
 # conky-cpus-system-informatics-colors.sh - Obtains the number of CPUs/cores/threads available and generates a corresponding number of lines of output for conky.
 # Each line contains the CPU/core/thread number, current usage in MHz, and current usage, as a percentage.
 #
@@ -39,52 +43,52 @@ then
   color2='${'"$color2"'}'
 fi
 
-result="$font1$color1"'CPU Data Unavailable'
+result=''
+cpuStatusOutput="`$HOME/.config/conky/scripts/posix/cpus-system-informatics-colors.sh`"
 
-cpuCount=`nproc`
-cpuMaxSpeed=`lscpu | awk '/CPU max MHz/{printf "%.f",$4; exit}'`
-
-if [ ! -z "$cpuCount" ]
+if [ -z "$cpuStatusOutput" ]
 then
+  echo "$font1$color1"'CPU Data Unavailable'
+  exit 0
+fi
 
-  voffset='-130'
+hasNext() {
 
-  if [ $cpuCount -gt 1 ]
+  case "$1" in
+    *,*) return 0 ;;
+  esac
+
+  return 1
+
+}
+
+count=1
+voffset='-130'
+
+while hasNext "$cpuStatusOutput"
+do
+
+  if [ $count -gt 1 ]
   then
 
-    result=''
-
-    for idx in `seq 1 $cpuCount`
-    do
-
-      if [ $idx -gt 1 ]
-      then
+    voffset='1'
 
 # append newline...
 result="$result"'
 '
 
-        voffset='1'
-
-      fi
-
-      cpuCurrentSpeed=`awk -v idx=$idx '/cpu MHz/{i++}i==idx{printf "%.f",$4; exit}' /proc/cpuinfo`
-
-      cpuUsePercentage=`awk -v dividend=$cpuCurrentSpeed -v divisor=$cpuMaxSpeed 'BEGIN {printf "%.2f", dividend/divisor; exit}'`
-      cpuUsePercentage="${cpuUsePercentage#*.}"
-
-      result=$result'${goto 198}${voffset '$voffset'}'"$font1$color1$idx $font2$color2$cpuCurrentSpeed"'MHz ${alignr 188}('$cpuUsePercentage'%)'
-
-    done
-
-  else
-
-    # default to MHz output of single CPU, with average CPU load percentage...
-    result='${goto 198}${voffset '$voffset'}'"$font1$color1"'0'" $font2$color2"'${'"exec awk '/cpu MHz/{i++}i==1{printf \"%.f\","'$4; exit}'"' /proc/cpuinfo}MHz"' ${alignr 188}(${cpu cpu0}%)'
-
   fi
+  
+  statusPair="${cpuStatusOutput%%,*}"
+  mhz="${statusPair%%:*}"
+  percentage="${statusPair#*:}"
 
-fi
+  result=$result'${goto 198}${voffset '$voffset'}'"$font1$color1$count $font2$color2$mhz"'MHz ${alignr 188}('$percentage'%)'
+
+  cpuStatusOutput="${cpuStatusOutput#*,}"
+  count=$(($count + 1))
+
+done
 
 echo "$result"
 exit $?

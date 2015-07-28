@@ -13,6 +13,19 @@ Wallpapers, as featured in the screenshots, can be found under **[WALLPAPERS](WA
 All conkyrc configs and lua scripts provided here are written by me, and come with an MPL, v2 license (open source), unless otherwise noted.  
 Fonts which accompany the configs are also open source, and are accompanied with a copy of whichever open source license is applicable.  
 
+I will eventually write an installer script, so you may easily install the conky configuration of your choice.
+For the time being, however, the scripts included expect a directory structure which matches that of the package-  
+Essentialy, thus:
+
+Under $HOME/.config/conky/: 
+conkyrc
+/images/
+/scripts/lua/
+/scripts/posix/
+
+Simple enough, yes?
+
+
 **A NOTE ABOUT THE WALLPAPERS**
 
 I don't create all the wallpapers here- like many wallpapers in use, they're often found around the internet, often with NO copyright info.  
