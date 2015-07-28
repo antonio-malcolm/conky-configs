@@ -52,6 +52,8 @@ then
   exit 0
 fi
 
+cpuStatusOutput="$cpuStatusOutput,"
+
 hasNext() {
 
   case "$1" in
