@@ -190,7 +190,7 @@ local function drawToConkyWindow(cairoContext)
     local positionX, positionY = curveDescriptor['position_x'], curveDescriptor['position_y']
     local angleStart, angleEnd = curveDescriptor['angle_start'], curveDescriptor['angle_end']
     local radius, weight = curveDescriptor['radius'], curveDescriptor['weight']
-	  local color, alpha, backgroundColor, backgroundAlpha = curveDescriptor['color'], curveDescriptor['alpha'], curveDescriptor['background_color'], curveDescriptor['background_alpha']
+    local color, alpha, backgroundColor, backgroundAlpha = curveDescriptor['color'], curveDescriptor['alpha'], curveDescriptor['background_color'], curveDescriptor['background_alpha']
 
     angleStart = angleStart * (2 * (math.pi / 360)) - (math.pi / 2)
     angleEnd = angleEnd * (2 * (math.pi / 360)) - (math.pi / 2)
