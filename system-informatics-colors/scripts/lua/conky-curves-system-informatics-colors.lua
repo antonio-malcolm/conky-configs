@@ -176,7 +176,7 @@ local function drawToConkyWindow(cairoContext)
   -- hexidecimal - number, required, the color hexidecimal to be converted to decimals
   -- alpha - number, the alpha transparency to be appended to the converted decimals
   local function getDecimalsAndAlphaFromHexAndAlpha(hexidecimal, alpha)
-	  return ((hexidecimal / 0x10000) % 0x100) / 255., ((hexidecimal / 0x100) % 0x100) / 255., (hexidecimal % 0x100) / 255., alpha
+    return ((hexidecimal / 0x10000) % 0x100) / 255., ((hexidecimal / 0x100) % 0x100) / 255., (hexidecimal % 0x100) / 255., alpha
   end
 
 
@@ -187,15 +187,15 @@ local function drawToConkyWindow(cairoContext)
   -- percentage - object, required, the percentage to be displayed as an arc against the curve
   local function drawPercentageCurve(curveDescriptor, percentage)
 
-	  local positionX, positionY = curveDescriptor['position_x'], curveDescriptor['position_y']
+    local positionX, positionY = curveDescriptor['position_x'], curveDescriptor['position_y']
     local angleStart, angleEnd = curveDescriptor['angle_start'], curveDescriptor['angle_end']
     local radius, weight = curveDescriptor['radius'], curveDescriptor['weight']
 	  local color, alpha, backgroundColor, backgroundAlpha = curveDescriptor['color'], curveDescriptor['alpha'], curveDescriptor['background_color'], curveDescriptor['background_alpha']
 
-	  angleStart = angleStart * (2 * (math.pi / 360)) - (math.pi / 2)
-	  angleEnd = angleEnd * (2 * (math.pi / 360)) - (math.pi / 2)
+    angleStart = angleStart * (2 * (math.pi / 360)) - (math.pi / 2)
+    angleEnd = angleEnd * (2 * (math.pi / 360)) - (math.pi / 2)
 
-	  local arcLength = percentage * (angleEnd - angleStart)
+    local arcLength = percentage * (angleEnd - angleStart)
     local isInverted = angleStart > angleEnd
 
 	  -- draw the curve...
@@ -207,9 +207,9 @@ local function drawToConkyWindow(cairoContext)
       cairo_arc(cairoContext, positionX, positionY, radius, angleStart, angleEnd)
     end
 
-	  cairo_set_source_rgba(cairoContext, getDecimalsAndAlphaFromHexAndAlpha(backgroundColor, backgroundAlpha))
-	  cairo_set_line_width(cairoContext, weight)
-	  cairo_stroke(cairoContext)
+    cairo_set_source_rgba(cairoContext, getDecimalsAndAlphaFromHexAndAlpha(backgroundColor, backgroundAlpha))
+    cairo_set_line_width(cairoContext, weight)
+    cairo_stroke(cairoContext)
 
 	  -- draw the percentage arc...
 
@@ -222,8 +222,8 @@ local function drawToConkyWindow(cairoContext)
       cairo_arc(cairoContext, positionX, positionY, radius, angleStart, angleEnd)
     end
 
-	  cairo_set_source_rgba(cairoContext, getDecimalsAndAlphaFromHexAndAlpha(color, alpha))
-	  cairo_stroke(cairoContext)
+    cairo_set_source_rgba(cairoContext, getDecimalsAndAlphaFromHexAndAlpha(color, alpha))
+    cairo_stroke(cairoContext)
 
   end
 
@@ -234,15 +234,15 @@ local function drawToConkyWindow(cairoContext)
   -- conkyArg - string, required, the argument used by Conky to obtain the reporting data
   local function drawPercentageCurveFromConkyValue(curveDescriptor, conkyArg)
 
-  	local conkyValue = conky_parse(conkyArg)
+    local conkyValue = conky_parse(conkyArg)
 
-	  if conkyValue ~= nil 
-    then 
+    if conkyValue ~= nil
+    then
 
       conkyValue = tonumber(conkyValue)
-	    conkyValue = conkyValue / curveDescriptor['percentage_divisor']
+      conkyValue = conkyValue / curveDescriptor['percentage_divisor']
 
-	    drawPercentageCurve(curveDescriptor, conkyValue)
+      drawPercentageCurve(curveDescriptor, conkyValue)
 
     end
 
@@ -270,8 +270,6 @@ local function drawToConkyWindow(cairoContext)
   if cpuPercentagesString ~= nil
   then
 
-    -- Step backwards through the number of CPUs (or cores, or threads), so the first curve is always outermost...
-
     cpuPercentages = {}
 
     for percentage in string.gmatch(cpuPercentagesString, "([^,]+)")
@@ -290,6 +288,8 @@ local function drawToConkyWindow(cairoContext)
 
     local cpuCount = table.getn(cpuPercentages)
     local alphaSteps = getBackgroundAlphaSteps(cpuCount)
+
+    -- Step backwards through the number of CPUs (or cores, or threads), so the first curve is always outermost...
 
     for idx = cpuCount, 1 , -1
     do
@@ -382,21 +382,21 @@ end
 -- lua_draw_hook_pre = 'conky_main'
 function conky_main()
 
-	if conky_window == nil 
+  if conky_window == nil
+  then
+    return
+  end
+
+  local cairoSurface = cairo_xlib_surface_create(conky_window.display, conky_window.drawable, conky_window.visual, conky_window.width, conky_window.height)
+  local cairoContext = cairo_create(cairoSurface)	
+
+  if cairoContext == nil 
   then 
     return 
   end
 
-	local cairoSurface = cairo_xlib_surface_create(conky_window.display, conky_window.drawable, conky_window.visual, conky_window.width, conky_window.height)
-	local cairoContext = cairo_create(cairoSurface)	
-
-	if cairoContext == nil 
-  then 
-    return 
-  end
-	
-	local updates = conky_parse('${updates}')
-	updates = tonumber(updates)
+  local updates = conky_parse('${updates}')
+  updates = tonumber(updates)
 
   -- in the case cpu updates are present in the curve descriptors, to prevent segfaults, 
   -- ensure conky has had at least five updates, before drawing to the screen...
