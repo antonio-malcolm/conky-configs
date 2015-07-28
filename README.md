@@ -17,11 +17,11 @@ I will eventually write an installer script, so you may easily install the conky
 For the time being, however, the scripts included expect a directory structure which matches that of the package-  
 Essentialy, thus:
 
-Under $HOME/.config/conky/: 
-conkyrc
-/images/
-/scripts/lua/
-/scripts/posix/
+Under $HOME/.config/conky/:  
+conkyrc  
+/images/  
+/scripts/lua/  
+/scripts/posix/  
 
 Simple enough, yes?
 
