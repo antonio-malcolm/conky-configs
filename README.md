@@ -25,6 +25,8 @@ conkyrc
 
 Simple enough, yes?
 
+**BTW, if you need to compile Conky with the Lua bindings (for Cairo output, which give us all the shiny-shiny), here's a wiki to help you along:** https://github.com/antonio-malcolm/conky-configs/wiki/How-To-Compile-Conky-And-Its-Lua-Bindings-From-Source
+
 
 **A NOTE ABOUT THE WALLPAPERS**
 
