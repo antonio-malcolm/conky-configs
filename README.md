@@ -13,11 +13,9 @@ Wallpapers, as featured in the screenshots, can be found under **[WALLPAPERS](WA
 All conkyrc configs and lua scripts provided here are written by me, and come with an MPL, v2 license (open source), unless otherwise noted.  
 Fonts which accompany the configs are also open source, and are accompanied with a copy of whichever open source license is applicable.  
 
-I will eventually write an installer script, so you may easily install the conky configuration of your choice.
-For the time being, however, the scripts included expect a directory structure which matches that of the package-  
-Essentialy, thus:
+**TO INSTALL:**
 
-COPY the contents of the config package (such as system-informatics-colors) into $HOME/.config/conky/.
+Copy the contents of the config package (such as system-informatics-colors) into $HOME/.config/conky/.
 
 Simple enough, yes?
 
