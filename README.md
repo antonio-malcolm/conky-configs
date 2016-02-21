@@ -15,7 +15,7 @@ Fonts which accompany the configs are also open source, and are accompanied with
 
 **TO INSTALL:**
 
-Copy the contents of the config package (such as system-informatics-colors) into $HOME/.config/conky/.
+Copy the contents of the config package (such as found in system-informatics-colors) into $HOME/.config/conky/.
 
 Simple enough, yes?
 
