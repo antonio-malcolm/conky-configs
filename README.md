@@ -17,11 +17,7 @@ I will eventually write an installer script, so you may easily install the conky
 For the time being, however, the scripts included expect a directory structure which matches that of the package-  
 Essentialy, thus:
 
-Under $HOME/.config/conky/:  
-conkyrc  
-/images/  
-/scripts/lua/  
-/scripts/posix/  
+COPY the contents of the config package (such as system-informatics-colors) into $HOME/.config/conky/.
 
 Simple enough, yes?
 
