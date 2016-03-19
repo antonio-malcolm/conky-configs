@@ -22,6 +22,9 @@ font1="$1"
 font2="$2"
 color1="$3"
 color2="$4"
+goto=$5
+voffsetGroup=$6
+voffsetLine=$7
 
 if [ ! -z "$font1" ]
 then
@@ -41,6 +44,21 @@ fi
 if [ ! -z "$color2" ]
 then
   color2='${'"$color2"'}'
+fi
+
+if [ ! -z "$goto" ]
+then
+  goto='${goto '"$goto"'}'
+fi
+
+if [ ! -z "$voffsetGroup" ]
+then
+  voffsetGroup='${voffset '"$voffsetGroup"'}'
+fi
+
+if [ ! -z "$voffsetLine" ]
+then
+  voffsetLine='${voffset '"$voffsetLine"'}'
 fi
 
 result=''
@@ -64,16 +82,16 @@ hasNext() {
 
 }
 
-count=1
-voffset='-130'
+count=0
+voffset="$voffsetGroup"
 
 while hasNext "$cpuStatusOutput"
 do
 
-  if [ $count -gt 1 ]
+  if [ $count -gt 0 ]
   then
 
-    voffset='1'
+    voffset="$voffsetLine"
 
 # append newline...
 result="$result"'
@@ -85,7 +103,7 @@ result="$result"'
   mhz="${statusPair%%:*}"
   percentage="${statusPair#*:}"
 
-  result=$result'${goto 198}${voffset '$voffset'}'"$font1$color1$count $font2$color2$mhz"'MHz ${alignr 188}('$percentage'%)'
+  result=$result"$goto$voffset$font1$color1$count $font2$color2$mhz"'MHz ${alignr 188}('$percentage'%)'
 
   cpuStatusOutput="${cpuStatusOutput#*,}"
   count=$(($count + 1))

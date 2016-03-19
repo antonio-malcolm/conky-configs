@@ -40,7 +40,7 @@ voffset='-130'
 
 cat /proc/cpuinfo | grep 'cpu MHz' | {
 
-  count=1
+  count=0
   delimter=''
 
   while read -r line
@@ -49,7 +49,7 @@ cat /proc/cpuinfo | grep 'cpu MHz' | {
     if [ ! -z "$line" ]
     then
 
-      if [ $count -gt 1 ]
+      if [ $count -gt 0 ]
       then
         delimiter=','
       fi
